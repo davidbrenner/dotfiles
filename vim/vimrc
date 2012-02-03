@@ -1,0 +1,382 @@
+" vimrc david-brenner.net
+" David Brenner
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"""" Section Required by vundle """"
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+set nocompatible
+filetype off
+
+set rtp+=~/.vim/bundle/vundle/
+call vundle#rc()
+
+" Vundle - Vundle, the plug-in manager for Vim
+Bundle 'gmarik/vundle'
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"""" Vim Bundles """"
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Navigation
+Bundle 'wincent/Command-T'
+Bundle 'kien/ctrlp.vim'
+
+" Commands
+Bundle 'tpope/vim-fugitive'
+Bundle 'scrooloose/nerdcommenter'
+
+" UI Additions
+Bundle 'scrooloose/nerdtree'
+Bundle 'Lokaltog/vim-powerline'
+Bundle 'mutewinter/vim-indent-guides'
+Bundle 'altercation/vim-colors-solarized'
+" Bundle 'nanotech/jellybeans.vim'
+Bundle 'git://vim-latex.git.sourceforge.net/gitroot/vim-latex/vim-latex'
+
+" Auto Helpers
+Bundle 'Raimondi/delimitMate'
+Bundle 'scrooloose/syntastic'
+Bundle 'ervandew/supertab'
+Bundle 'Shougo/neocomplcache'
+
+" pyflakes -> replaced with syntastic
+" tagbar
+
+filetype plugin indent on     " required! 
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"""" vimrc config """"
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+let mapleader=","
+
+
+"fix backspace if terminal isn't set up sanely
+"imap <C-?> <C-h> 
+"set viminfo='50,\"1000,:100,n~/.viminfo "keep state
+set t_Co=256
+
+
+"let b:did_pyflakes_plugin=1
+"let g:SuperTabMappingForward = '<c-space>'
+"let g:SuperTabMappingBackward = '<s-c-space>'
+
+
+"vmap <M-j> gj
+"vmap <M-k> gk
+"vmap <M-4> g$
+"vmap <M-6> g^
+"vmap <M-0> g^
+"nmap <M-j> gj
+"nmap <M-k> gk
+"nmap <M-4> g$
+"nmap <M-6> g^
+"nmap <M-0> g^
+
+"---color scheme---
+set background=dark
+let g:solarized_termtrans=1
+let g:solarized_termcolors=256
+"let g:solarized_contrast="high"
+"let g:solarized_visibility="high"
+colorscheme solarized
+"colorscheme molokai
+"colorscheme desert
+
+" ---backups---
+set backup
+set backupdir=~/.vim/backup
+set directory=~/.vim/backup
+
+" ---ui---
+"---status----
+set noerrorbells "no bells
+set novisualbell "no visual bells
+set t_vb=
+set ruler        "show statusline
+"set showcmd      "show command
+set lbr          "show linebreaks with breakat symbol
+set showmatch    "show matching ()'s
+set list
+"set showmode    "show current mode
+" Use the same symbols as TextMate for tabstops and EOLs
+set listchars=tab:▸\ ,eol:¬
+set number
+" Shortcut to rapidly toggle `set list`
+nmap <leader>l :set list!<CR>
+
+"---behaviors---
+syntax enable
+"set autoread      " auto reload changes
+set history=1024  " command history
+set wildmenu      "menu for autocomplete (:e a<TAB>)
+"set hidden        " change buffer without saving
+set cf            " Enable error files and jumping
+"set autowrite     " write on make/shell commands
+
+" Text Format
+"---indentation---
+" smartindent breaks for python comments
+"set smartindent  "indent smartly
+set tabstop=4    "4-space tabs
+set sts=4        "fix backspace for tabs
+set shiftwidth=4 "4-space indent
+set autoindent   "auto indent same as previous
+set smarttab
+set expandtab    "tabs -> spaces
+set shiftround   "round spaces to meet indentation
+set backspace=2
+set whichwrap=h,l,~,[,] "h and l will wrap on lines
+
+"---searching options---
+set ignorecase "case insensitive matching
+set smartcase  "case sensitive matching when I use uppercase
+set nohls      "no highlight for searches
+set incsearch  "search as you type
+set magic      "magic regex
+set wildignore=*.o,*.obj,*.bak,*.exe,*.so,*.dll,*.pyc,.sv,.hg,.bzr,.git
+
+"---visual---
+set showmatch  " show matching brackets
+
+"---movement---
+
+"---other---
+" set encoding=utf-8 " Set default encoding to UTF-8.
+
+"---key bindings---
+" remove doc lookup keybinding
+nmap K k
+vmap K k
+
+"---leader commands---
+" Toggle spelling mode with ,s
+nmap <silent> <leader>s :set spell!<CR>
+
+" Window Movement
+nmap <silent> <C-h> :wincmd h<CR>
+nmap <silent> <C-j> :wincmd j<CR>
+nmap <silent> <C-k> :wincmd k<CR>
+nmap <silent> <C-l> :wincmd l<CR>
+" " Previous Window
+nmap <silent> <C-p> :wincmd p<CR>
+
+" Equal Size Windows
+nmap <silent> <leader>w= :wincmd =<CR>
+
+" Window Splitting
+nmap <silent> <leader>sh :split<CR>
+nmap <silent> <leader>sv :vsplit<CR>
+" Because I'm dyslexic
+nmap <silent> <leader>hs :split<CR>
+nmap <silent> <leader>vs :vsplit<CR>
+nmap <silent> <leader>sc :close<CR>
+set pastetoggle=<F12> "f12 to toggle paste mode
+
+" ---------------
+" SuperTab
+" ---------------
+" Set these up for cross-buffer completion (something Neocachecompl has a hard
+" time with)
+let g:SuperTabDefaultCompletionType="<c-x><c-n>"
+let g:SuperTabContextDefaultCompletionType="<c-x><c-n>"
+
+" ---------------
+" Neocachecompl
+" ---------------
+let g:neocomplcache_enable_at_startup=1
+let g:neocomplcache_enable_auto_select=1 "Select the first entry automatically
+let g:neocomplcache_enable_cursor_hold_i=1
+let g:neocomplcache_cursor_hold_i_time=300
+let g:neocomplcache_auto_completion_start_length=1
+
+" Tab / Shift-Tab to cycle completions
+inoremap <expr><TAB> pumvisible() ? "\<C-n>" : "\<TAB>"
+inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<S-TAB>"
+
+" Required to make neocomplcache_cursor_hold_i_time work
+" See https://github.com/Shougo/neocomplcache/issues/140
+let s:update_time_save = &updatetime
+autocmd InsertEnter * call s:on_insert_enter()
+
+function! s:on_insert_enter()
+  if &updatetime > g:neocomplcache_cursor_hold_i_time
+    let s:update_time_save = &updatetime
+    let &updatetime = g:neocomplcache_cursor_hold_i_time
+  endif
+endfunction
+
+autocmd InsertLeave * call s:on_insert_leave()
+
+function! s:on_insert_leave()
+  if &updatetime < s:update_time_save
+    let &updatetime = s:update_time_save
+  endif
+endfunction
+
+" ---------------
+" Syntastic
+" ---------------
+let g:syntastic_enable_signs=1
+let g:syntastic_auto_loc_list=1
+
+" ---------------
+" NERDTree
+" ---------------
+nnoremap <leader>nn :NERDTreeToggle<CR>
+nnoremap <leader>nf :NERDTreeFind<CR>
+let NERDTreeShowBookmarks=1
+let NERDTreeChDirMode=2 " Change the NERDTree directory to the root node
+autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTreeType == "primary") | q | endif
+
+" ---------------
+" Indent Guides
+" ---------------
+let g:indent_guides_enable_on_vim_startup=1
+
+" ---------------
+" Fugitive
+" ---------------
+nmap <Leader>gc :Gcommit<CR>
+nmap <Leader>gw :Gwrite<CR>
+nmap <Leader>gs :Gstatus<CR>
+nmap <Leader>gp :Git push<CR>
+" Mnemonic, gu = Git Update
+nmap <Leader>gu :Git pull<CR>
+nmap <Leader>gd :Gdiff<CR>
+" Exit a diff by closing the diff window
+nmap <Leader>gx :wincmd h<CR>:q<CR>
+
+" ---------------
+" Command T and ctrlp.vim
+" ---------------
+" Ensure Ctrl-P isn't bound by default
+let g:ctrlp_map = ''
+if has('ruby')
+" We've got Ruby, use Command T
+
+" Conditional Mappings
+  if has("gui_macvim")
+    nnoremap <silent><D-t> :CommandT<CR>
+  else
+    nnoremap <silent><M-t> :CommandT<CR>
+  endif
+
+" Leader Commands
+  nnoremap <leader>t :CommandT<CR>
+  nnoremap <leader>u :CommandT %%<CR>
+else
+" Fallback on ctrlp.vim if Ruby for Command T not available
+
+" Conditional Mappings
+  if has("gui_macvim")
+    let g:ctrlp_map = '<D-t>'
+  else
+    let g:ctrlp_map = '<M-t>'
+  endif
+
+" Leader Commands
+  nnoremap <leader>t :CtrlPRoot<CR>
+endif
+
+" Ensure max height isn't too large. (for performance)
+let g:ctrlp_max_height = 10
+let g:CommandTMaxHeight = 10
+
+" Mapping from ctrlp we always use
+if has('gui_macvim')
+  nnoremap <silent><D-u> :CtrlPCurFile<CR>
+  nnoremap <silent><D-y> :CtrlPMRUFiles<CR>
+else
+  nnoremap <silent><M-u> :CtrlPCurFile<CR>
+  nnoremap <silent><M-y> :CtrlPMRUFiles<CR>
+end
+
+" Also map leader commands
+nnoremap <leader>u :CtrlPCurFile<CR>
+nnoremap <leader>y :CtrlPMRUFiles<CR>
+
+" ---------------
+" Vundle
+" ---------------
+nmap <Leader>bi :BundleInstall<CR>
+nmap <Leader>bu :BundleInstall!<CR> " Because this also updates
+nmap <Leader>bc :BundleClean<CR>
+
+" vim-latex settings
+let g:Tex_SectionMaps=0
+let g:Tex_DefaultTargetFormat='pdf'
+"let g:Tex_MultipleCompileFormats='dvi,pdf'
+let g:Tex_UseMakefile=1
+let g:Tex_ViewRule_pdf='evince'
+let g:Tex_CompileRule_pdf='latexmk -dvi- -pdf $*'
+
+" Powerline settings
+set laststatus=2   " Always show the statusline
+set encoding=utf-8 " Necessary to show unicode glyphs
+set guifont=Monaco\ for\ Powerline\ 10
+let g:Powerline_symbols = 'fancy'
+
+let g:indent_guides_auto_colors = 0
+autocmd VimEnter,Colorscheme * :hi IndentGuidesOdd  ctermbg=234
+autocmd VimEnter,Colorscheme * :hi IndentGuidesEven ctermbg=235
+
+
+"nnoremap <F1> :help<Space> "f1 prompt help (all modes)
+"vmap <F1> <C-C><F1>
+"omap <F1> <C-C><F1>
+"map! <F1> <C-C><F1>
+"noremap <silent> <F11> :set number!<cr> "f11 to toggle showing numbers
+"inoremap ;; <Esc>
+
+"---use tabs for different filetypes (Makefiles, etc)---
+"autocmd FileType make setlocal ts=8 sts=8 sw=8 noexpandtab
+"autocmd FileType yaml setlocal ts=2 sts=2 sw=2 expandtab
+"autocmd FileType html setlocal ts=2 sts=2 sw=2 expandtab
+"autocmd FileType css setlocal ts=2 sts=2 sw=2 expandtab
+"autocmd FileType javascript setlocal  ts=4 sts=4 sw=4 noexpandtab
+
+" Treat .rss files as XML
+"autocmd BufNewFile,BufRead *.rss,*.atom setfiletype xml
+
+
+"---nifty regexes for commenting out lines---
+" lhs comments
+"map ,# :s/^/#/<CR>
+"map ,/ :s/^/\/\//<CR>
+"map ,> :s/^/> /<CR>
+"map ," :s/^/\"/<CR>
+"map ,! :s/^/!/<CR>
+"map ,; :s/^/;/<CR>
+"map ,- :s/^/--/<CR>
+"map ,c :s/^\/\/\\|^--\\|^> \\|^[#"%!;]//<CR>
+
+" wrapping comments
+"map ,* :s/^\(.*\)$/\/\* \1 \*\//<CR>
+"map ,< :s/^\(.*\)$/<!-- \1 -->/<CR>
+
+"---2html plugin options---
+let html_use_css = 1      "use css in the output
+let html_number_lines = 1 "number the lines
+
+"---the following changes the title string in screen---
+"let &titlestring = expand("%:t")
+"if &term == "screen"
+"  set t_ts=k
+"  set t_fs=\
+"  set title
+"  set titleold=""
+"endif
+
+"---file autocommands---
+"au BufNewFile,BufRead *.filetype :set ft=newfiletype " all my .filetype files ARE newfiletype
+ 
+" disable minibufexplorer
+"let g:loaded_minibufexplorer = 1
+
+"---command-t plugin---
+"noremap <leader>o <Esc>:CommandT<CR>
+"noremap <leader>O <Esc>:CommandTFlush<CR>
+"noremap <leader>m <Esc>:CommandTBuffer<CR>
+"
+
+
+" ---Plugins---
