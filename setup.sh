@@ -9,6 +9,7 @@ ln -sf vim ~/.vim
 ln -sf vim/vimrc ~/.vimrc
 mkdir -p vim/backup
 # Run bundle install in vim
+git clone https://github.com/gmarik/vundle.git vim/bundle/vundle
 vim +BundleInstall +qall
 # Command-T install
 cd vim/bundle/Command-T/ruby/command-t
