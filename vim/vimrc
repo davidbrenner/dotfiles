@@ -90,6 +90,7 @@ set directory=~/.vim/backup
 "---status----
 set noerrorbells "no bells
 set novisualbell "no visual bells
+" visual bells
 set t_vb=
 set ruler        "show statusline
 "set showcmd      "show command
@@ -217,6 +218,10 @@ endfunction
 " ---------------
 let g:syntastic_enable_signs=1
 let g:syntastic_auto_loc_list=1
+let g:syntastic_mode_map = { 'mode': 'active',
+                            \ 'passive_filetypes': ['latex', 'tex'] }
+" hack to stop syntastic from running on wq
+noremap :wq :au! syntastic<cr>:wq
 
 " ---------------
 " NERDTree
