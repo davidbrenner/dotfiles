@@ -1,0 +1,164 @@
+# For the benefit of emacs users: -*- shell-script -*-
+###########################
+# xbindkeys configuration #
+###########################
+#
+# Version: 1.8.3
+#
+# If you edit this file, do not forget to uncomment any lines
+# that you change.
+# The pound(#) symbol may be used anywhere for comments.
+#
+# To specify a key, you can use 'xbindkeys --key' or
+# 'xbindkeys --multikey' and put one of the two lines in this file.
+#
+# The format of a command line is:
+#    "command to start"
+#       associated key
+#
+#
+# A list of keys is in /usr/include/X11/keysym.h and in
+# /usr/include/X11/keysymdef.h
+# The XK_ is not needed.
+#
+# List of modifier:
+#   Release, Control, Shift, Mod1 (Alt), Mod2 (NumLock),
+#   Mod3 (CapsLock), Mod4, Mod5 (Scroll).
+#
+
+# The release modifier is not a standard X modifier, but you can
+# use it if you want to catch release events instead of press events
+
+# By defaults, xbindkeys does not pay attention with the modifiers
+# NumLock, CapsLock and ScrollLock.
+# Uncomment the lines above if you want to pay attention to them.
+
+#keystate_numlock = enable
+#keystate_capslock = enable
+#keystate_scrolllock= enable
+
+# Examples of commands:
+
+#"xbindkeys_show" 
+#  control+shift + q
+
+# set directly keycode (here control + f with my keyboard)
+#"xterm"
+#  c:41 + m:0x4
+
+# specify a mouse button
+#"xterm"
+#  control + b:2
+
+#"xterm -geom 50x20+20+20"
+#   Shift+Mod2+alt + s
+#
+## set directly keycode (here control+alt+mod2 + f with my keyboard)
+#"xterm"
+#  alt + c:0x29 + m:4 + mod2
+#
+## Control+Shift+a  release event starts rxvt
+#"rxvt"
+#  release+control+shift + a
+#
+## Control + mouse button 2 release event starts rxvt
+#"rxvt"
+#  Control + b:2 + Release
+
+
+# next song
+#"mpc next"
+"ps -C 'pianobar' > /dev/null; if [ $? -ne 0 ]; then mpc next; else /home/davidb/remote_pianobar.sh next; fi"
+    m:0x0 + c:167
+    XF86Forward
+#"mpc next"
+"ps -C 'pianobar' > /dev/null; if [ $? -ne 0 ]; then mpc next; else /home/davidb/remote_pianobar.sh next; fi"
+    m:0x0 + c:171
+    XF86AudioNext
+
+# prev song
+#"mpc prev"
+"ps -C 'pianobar' > /dev/null; if [ $? -ne 0 ]; then mpc prev; else /home/davidb/remote_pianobar.sh t; fi"
+    m:0x0 + c:166
+    XF86Back
+#"mpc prev"
+"ps -C 'pianobar' > /dev/null; if [ $? -ne 0 ]; then mpc prev; else /home/davidb/remote_pianobar.sh ban; fi"
+    m:0x0 + c:173
+    XF86AudioPrev
+
+# pause/play
+#"mpc toggle"
+"ps -C 'pianobar' > /dev/null; if [ $? -ne 0 ]; then mpc toggle; else /home/davidb/remote_pianobar.sh pp; fi"
+    m:0x0 + c:172
+    XF86AudioPlay
+
+# love button (no idea which button this is)
+"/home/davidb/remote_pianobar.sh love"
+    m:0x10 + c:174
+    Mod2 + XF86AudioStop
+
+# home
+"firefox"
+    m:0x0 + c:180
+    XF86HomePage
+
+# search
+"firefox google.com"
+    m:0x0 + c:225
+    XF86Search
+
+# mail
+"thunderbird"
+    m:0x0 + c:163
+    XF86Mail
+
+# fav button one
+"/home/davidb/changechannel down"
+    m:0x0 + c:192
+    NoSymbol
+# fav button two
+"/home/davidb/changechannel up"
+    m:0x0 + c:193
+    NoSymbol
+# fav button 3
+"/home/davidb/changechannel1 down"
+    m:0x0 + c:194
+    NoSymbol
+# fav button 4
+#"/home/davidb/changechannel1 up"
+"ps -C 'pianobar' > /dev/null; if [ $? -ne 0 ]; then /home/davidb/changechannel1 up; else /home/davidb/remote_pianobar.sh ban; fi"
+    m:0x0 + c:195
+    NoSymbol
+# fav button 5
+"ps -C 'pianobar' > /dev/null; if [ $? -ne 0 ]; then echo 'oops' > /dev/null; else /home/davidb/remote_pianobar.sh love; fi"
+    m:0x0 + c:196
+    NoSymbol
+# fav star button
+"amixer set -c 0 Surround toggle; amixer -c 0 set Front toggle"
+    m:0x0 + c:164
+    XF86Favorites
+# calculator
+"tiemu"
+    m:0x0 + c:148
+    XF86Calculator
+# volume up
+"amixer -c 0 set Master 1+"
+    m:0x0 + c:123
+    XF86AudioRaiseVolume
+# volume down
+"amixer -c 0 set Master 1-"
+    m:0x0 + c:122
+    XF86AudioLowerVolume
+"amixer set Master toggle"
+    m:0x0 + c:121
+    XF86AudioMute
+# sleep monitors
+"sleep 1; xset dpms force off"
+    m:0x0 + c:152
+    XF86Explorer
+
+
+
+##################################
+# End of xbindkeys configuration #
+##################################
