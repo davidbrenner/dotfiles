@@ -1,9 +1,3 @@
-alias winvm='virt-viewer -c qemu:///system xpsp2'
-alias xpvm='virt-viewer -c qemu:///system xpsp2'
-alias xpvm-start='virsh -c qemu:///system start xpsp2'
-alias xpvm-stop='virsh -c qemu:///system destroy xpsp2'
-alias ssh-cluster='ssh -X dab2704@cluster.ce.rit.edu'
-alias listen-icecast='while true; sleep 2; do mplayer -cache 32 http://apathy.rh.rit.edu:8000/mpd.ogg; done;'
 alias sl="ls"
 alias l="ls"
 alias s="ls"
@@ -39,18 +33,11 @@ alias c="clear"
 alias which='type -a'
 alias open="xdg-open"
 
-# this was cute, but is dumb
-#alias gcc='cowsay "Hello"; gcc'
-#alias g++='cowsay "Hello"; g++'
-#alias make='cowsay "Hello"; nice -n 10 make'
-#alias javac='cowsay "Hello"; javac'
-
 alias stamp='date "+%Y%m%d%a%H%M"'
 alias top-commands='history | awk "{print $2}" | awk "BEGIN {FS="|"} {print $1}" |sort|uniq -c | sort -rn | head -10'
-alias weather="weather -f -c rochester -s ny --id=KROC"
 
 alias dbrenn="mosh davidb@dbrenn.com"
-alias apathy="ssh davidb@192.168.0.3"
+alias apathy="ssh davidb@apathy.brenner.lan"
 alias hdl="ssh davidb@hdl-08.ce.rit.edu"
 alias rancor="mosh remmer@rancor.csh.rit.edu"
 
