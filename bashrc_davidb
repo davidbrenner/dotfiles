@@ -1,23 +1,12 @@
 # David Brenner
 # .bashrc include:
 #
-#if [ -f ~/.bashrc_davidb ]; then
-#    . ~/.bashrc_davidb
-#fi
-
 if [ -f ~/.bash_aliases ]; then
     . ~/.bash_aliases
 fi
 if [ -f ~/.bashrc_local ]; then
     . ~/.bashrc_local
 fi
-#case "$TERM" in
-  #xterm*|rxvt*|screen*)
-  #PROMPT_COMMAND='echo -ne "\033]0;${USER}@${HOSTNAME}: ${PWD/$HOME/~}\007"'
-  #;;
-  #*)
-  #;;
-#esac
 
 #some history things
 export HISTSIZE=50000
@@ -34,39 +23,8 @@ export BROWSER='firefox'
 export LC_ALL="en_US.UTF-8"
 export LANGUAGE="en_US.UTF-8"
 
-# keychain to manage ssh keys
-#eval `keychain --eval --nogui -Q -q id_rsa`
-
 # turn off stty start/stop
 stty -ixon
-
-# pre exec stuff
-#if [ -f ~/.preexec.bash ]; then
-  #. ~/.preexec.bash
-  #set_xterm_title () {
-    #local title="$1"
-    #case "$TERM" in
-      #screen*)
-      #echo -ne "\ek$title\e\\"
-      #echo -ne "\e_$HOST\e\\"
-      #;;
-      #*)
-      #echo -ne "\e]0;$title\007"
-      #;;
-    #esac
-
-  #}
-
-  #precmd () {
-    #set_xterm_title "${USER}@${HOSTNAME} `dirs -0` $PROMPTCHAR"
-  #}
-
-  #preexec () {
-    #set_xterm_title "${1:22} (`dirs -0`)"
-  #}
-  #preexec_install
-#fi
-
 
 # Easy extract
 extract () {
