@@ -1,6 +1,8 @@
 " vimrc david-brenner.net
 " David Brenner
 
+" FIXME: g:undotree_WindowLayout
+
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 """" Section Required by vundle """"
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -17,7 +19,6 @@ Bundle 'gmarik/vundle'
 """" Vim Bundles """"
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Navigation
-Bundle 'wincent/Command-T'
 Bundle 'kien/ctrlp.vim'
 
 " Commands
@@ -25,19 +26,30 @@ Bundle 'tpope/vim-fugitive'
 Bundle 'scrooloose/nerdcommenter'
 
 " UI Additions
+""" tools
+Bundle 'mbbill/undotree'
+Bundle 'tpope/vim-surround'
+Bundle 'mileszs/ack.vim'
 Bundle 'scrooloose/nerdtree'
-Bundle 'Lokaltog/vim-powerline'
-Bundle 'mutewinter/vim-indent-guides'
+Bundle 'godlygeek/tabular'
+Bundle 'git://git.code.sf.net/p/vim-latex/vim-latex'
+Bundle 'Lokaltog/vim-easymotion'
+""" look/feel
+Bundle 'nathanaelkane/vim-indent-guides'
 Bundle 'altercation/vim-colors-solarized'
-" Bundle 'nanotech/jellybeans.vim'
-Bundle 'git://vim-latex.git.sourceforge.net/gitroot/vim-latex/vim-latex'
+Bundle 'bling/vim-airline'
+"Bundle 'myusuf3/numbers.vim'
+"Bundle 'Lokaltog/vim-powerline'
+"Bundle 'nanotech/jellybeans.vim'
 
 " Auto Helpers
-Bundle 'Raimondi/delimitMate'
 Bundle 'scrooloose/syntastic'
 Bundle 'ervandew/supertab'
 Bundle 'Shougo/neocomplcache'
 
+" Syntax highlighting
+Bundle 'tpope/vim-markdown'
+"
 " pyflakes -> replaced with syntastic
 " tagbar
 
@@ -80,24 +92,42 @@ let g:solarized_termcolors=256
 colorscheme solarized
 "colorscheme molokai
 "colorscheme desert
+"
+
+if has('gui_running')
+    set guioptions-=m  "remove menu bar
+    set guioptions-=T  "remove toolbar
+    set guioptions-=r  "remove right-hand scroll bar
+    set guifont=Monaco\ 8
+endif
 
 " ---backups---
 set backup
 set backupdir=~/.vim/backup
 set directory=~/.vim/backup
+if has('persistent_undo')
+    set undofile " So is persistent undo ...
+    set undodir=~/.vim/undo
+    set undolevels=1000 " Maximum number of changes that can be undone
+    set undoreload=10000 " Maximum number lines to save for undo on a buffer reload
+endif
 
 " ---ui---
 "---status----
 set noerrorbells "no bells
 set novisualbell "no visual bells
+set cursorline
+"set cursorcolumn
 " visual bells
 set t_vb=
-set ruler        "show statusline
-"set showcmd      "show command
+set ruler        "show ruler
+set rulerformat=%30(%=\:b%n%y%m%r%w\ %l,%c%V\ %P%)
+set showcmd      "show command
 set lbr          "show linebreaks with breakat symbol
 set showmatch    "show matching ()'s
 set list
-"set showmode    "show current mode
+set showmode    "show current mode
+set laststatus=2 " Always show the statusline
 " Use the same symbols as TextMate for tabstops and EOLs
 set listchars=tab:▸\ ,eol:¬
 set number
@@ -166,12 +196,13 @@ nmap <silent> <leader>w= :wincmd =<CR>
 " Window Splitting
 nmap <silent> <leader>sh :split<CR>
 nmap <silent> <leader>sv :vsplit<CR>
-" Because I'm dyslexic
+" Because I'm ocassionally dyslexic
 nmap <silent> <leader>hs :split<CR>
 nmap <silent> <leader>vs :vsplit<CR>
 nmap <silent> <leader>sc :close<CR>
 set pastetoggle=<F12> "f12 to toggle paste mode
 
+nnoremap <F3> :NumbersToggle<CR>
 " ---------------
 " SuperTab
 " ---------------
@@ -251,53 +282,30 @@ nmap <Leader>gd :Gdiff<CR>
 nmap <Leader>gx :wincmd h<CR>:q<CR>
 
 " ---------------
-" Command T and ctrlp.vim
+" ctrlp.vim
 " ---------------
-" Ensure Ctrl-P isn't bound by default
-let g:ctrlp_map = ''
-if has('ruby')
-" We've got Ruby, use Command T
+" ctrlp {
+    let g:ctrlp_working_path_mode = 'ra'
+    nnoremap <silent> <D-t> :CtrlP<CR>
+    nnoremap <silent> <D-r> :CtrlPMRU<CR>
+    let g:ctrlp_custom_ignore = {
+        \ 'dir': '\.git$\|\.hg$\|\.svn$',
+        \ 'file': '\.exe$\|\.so$\|\.dll$\|\.pyc$' }
 
-" Conditional Mappings
-  if has("gui_macvim")
-    nnoremap <silent><D-t> :CommandT<CR>
-  else
-    nnoremap <silent><M-t> :CommandT<CR>
-  endif
+"}
 
-" Leader Commands
-  nnoremap <leader>t :CommandT<CR>
-  nnoremap <leader>u :CommandT %%<CR>
-else
-" Fallback on ctrlp.vim if Ruby for Command T not available
+" -- undotree
 
-" Conditional Mappings
-  if has("gui_macvim")
-    let g:ctrlp_map = '<D-t>'
-  else
-    let g:ctrlp_map = '<M-t>'
-  endif
+" UndoTree {
+    nnoremap <Leader>u :UndotreeToggle<CR>
+    " If undotree is opened, it is likely one wants to interact with it.
+    let g:undotree_SetFocusWhenToggle=1
+" }
 
-" Leader Commands
-  nnoremap <leader>t :CtrlPRoot<CR>
+" -- airline
+if !exists('g:airline_theme')
+    let g:airline_theme = 'solarized'
 endif
-
-" Ensure max height isn't too large. (for performance)
-let g:ctrlp_max_height = 10
-let g:CommandTMaxHeight = 10
-
-" Mapping from ctrlp we always use
-if has('gui_macvim')
-  nnoremap <silent><D-u> :CtrlPCurFile<CR>
-  nnoremap <silent><D-y> :CtrlPMRUFiles<CR>
-else
-  nnoremap <silent><M-u> :CtrlPCurFile<CR>
-  nnoremap <silent><M-y> :CtrlPMRUFiles<CR>
-end
-
-" Also map leader commands
-nnoremap <leader>u :CtrlPCurFile<CR>
-nnoremap <leader>y :CtrlPMRUFiles<CR>
 
 " ---------------
 " Vundle
@@ -315,10 +323,10 @@ let g:Tex_ViewRule_pdf='evince'
 let g:Tex_CompileRule_pdf='latexmk -dvi- -pdf $*'
 
 " Powerline settings
-set laststatus=2   " Always show the statusline
-set encoding=utf-8 " Necessary to show unicode glyphs
-set guifont=Monaco\ for\ Powerline\ 10
-let g:Powerline_symbols = 'fancy'
+"set laststatus=2   " Always show the statusline
+"set encoding=utf-8 " Necessary to show unicode glyphs
+"set guifont=Monaco\ for\ Powerline\ 10
+"let g:Powerline_symbols = 'fancy'
 
 let g:indent_guides_auto_colors = 0
 autocmd VimEnter,Colorscheme * :hi IndentGuidesOdd  ctermbg=234
@@ -377,11 +385,3 @@ let html_number_lines = 1 "number the lines
 " disable minibufexplorer
 "let g:loaded_minibufexplorer = 1
 
-"---command-t plugin---
-"noremap <leader>o <Esc>:CommandT<CR>
-"noremap <leader>O <Esc>:CommandTFlush<CR>
-"noremap <leader>m <Esc>:CommandTBuffer<CR>
-"
-
-
-" ---Plugins---
