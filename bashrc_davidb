@@ -1,0 +1,96 @@
+# David Brenner
+# .bashrc include:
+#
+#if [ -f ~/.bashrc_davidb ]; then
+#    . ~/.bashrc_davidb
+#fi
+
+if [ -f ~/.bash_aliases ]; then
+    . ~/.bash_aliases
+fi
+if [ -f ~/.bashrc_local ]; then
+    . ~/.bashrc_local
+fi
+#case "$TERM" in
+  #xterm*|rxvt*|screen*)
+  #PROMPT_COMMAND='echo -ne "\033]0;${USER}@${HOSTNAME}: ${PWD/$HOME/~}\007"'
+  #;;
+  #*)
+  #;;
+#esac
+
+#some history things
+export HISTSIZE=50000
+shopt -s histappend
+shopt -s cmdhist
+HISTCONTROL=ignoredups
+export HISTIGNORE="&:ls:ll:la:lh:sl"
+export HISTTIMEFORMAT='%Y-%m-%d %H:%M:%S - '
+
+export PAGER=/usr/bin/less
+export EDITOR='vim'
+export BROWSER='firefox'
+#export CC=/usr/bin/gcc
+export LC_ALL="en_US.UTF-8"
+export LANGUAGE="en_US.UTF-8"
+
+# keychain to manage ssh keys
+#eval `keychain --eval --nogui -Q -q id_rsa`
+
+# turn off stty start/stop
+stty -ixon
+
+# pre exec stuff
+#if [ -f ~/.preexec.bash ]; then
+  #. ~/.preexec.bash
+  #set_xterm_title () {
+    #local title="$1"
+    #case "$TERM" in
+      #screen*)
+      #echo -ne "\ek$title\e\\"
+      #echo -ne "\e_$HOST\e\\"
+      #;;
+      #*)
+      #echo -ne "\e]0;$title\007"
+      #;;
+    #esac
+
+  #}
+
+  #precmd () {
+    #set_xterm_title "${USER}@${HOSTNAME} `dirs -0` $PROMPTCHAR"
+  #}
+
+  #preexec () {
+    #set_xterm_title "${1:22} (`dirs -0`)"
+  #}
+  #preexec_install
+#fi
+
+
+# Easy extract
+extract () {
+  if [ -f $1 ] ; then
+    case $1 in
+      *.tar.bz2)   tar xvjf $1    ;;
+      *.tar.gz)    tar xvzf $1    ;;
+      *.bz2)       bunzip2 $1     ;;
+      *.rar)       rar x $1       ;;
+      *.gz)        gunzip $1      ;;
+      *.tar)       tar xvf $1     ;;
+      *.tbz2)      tar xvjf $1    ;;
+      *.tgz)       tar xvzf $1    ;;
+      *.zip)       unzip $1       ;;
+      *.Z)         uncompress $1  ;;
+      *.7z)        7z x $1        ;;
+      *)           echo "don't know how to extract '$1'..." ;;
+    esac
+  else
+    echo "'$1' is not a valid file!"
+  fi
+}
+
+# Creates an archive from given directory
+mktar() { tar cvf  "${1%%/}.tar"     "${1%%/}/"; }
+mktgz() { tar cvzf "${1%%/}.tar.gz"  "${1%%/}/"; }
+mktbz() { tar cvjf "${1%%/}.tar.bz2" "${1%%/}/"; }
