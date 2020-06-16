@@ -1,0 +1,16 @@
+#!/bin/sh
+
+device=3
+
+if [[ $1 == "mem" ]]; then
+    device=4
+fi
+
+if [[ $1 == "cpu" ]]; then
+    device=3
+fi
+
+command="ps aux | sort -n -k ${device} | tail -1 | awk '{ printf \"%s    %s%\", \$11, \$${device}}'"
+#ps aux | sort -n -k ${device} | tail -1 | awk '{ printf "%s    %s%", $11, \$${device}}'
+
+eval ${command}
