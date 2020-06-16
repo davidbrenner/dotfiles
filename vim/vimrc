@@ -19,14 +19,16 @@ Bundle 'gmarik/vundle'
 """" Vim Bundles """"
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Navigation
-Bundle 'kien/ctrlp.vim'
+Bundle 'ctrlpvim/ctrlp.vim'
 
 " Commands
 Bundle 'tpope/vim-fugitive'
 Bundle 'scrooloose/nerdcommenter'
 
+
 " UI Additions
 """ tools
+Bundle 'prettier/vim-prettier'
 Bundle 'mbbill/undotree'
 Bundle 'tpope/vim-surround'
 Bundle 'mileszs/ack.vim'
@@ -37,14 +39,18 @@ Bundle 'Lokaltog/vim-easymotion'
 """ look/feel
 Bundle 'nathanaelkane/vim-indent-guides'
 Bundle 'altercation/vim-colors-solarized'
-Bundle 'bling/vim-airline'
+Bundle 'vim-airline/vim-airline-themes'
+Bundle 'pangloss/vim-javascript'
+Bundle 'leafgarland/typescript-vim'
+Bundle 'MaxMEllon/vim-jsx-pretty'
+"Bundle 'bling/vim-airline'
 "Bundle 'myusuf3/numbers.vim'
 "Bundle 'Lokaltog/vim-powerline'
 "Bundle 'nanotech/jellybeans.vim'
 
 " Auto Helpers
-Bundle 'scrooloose/syntastic'
-Bundle 'ervandew/supertab'
+"Bundle 'scrooloose/syntastic'
+"Bundle 'ervandew/supertab'
 Bundle 'Shougo/neocomplcache'
 
 " Syntax highlighting
@@ -84,7 +90,7 @@ set t_Co=256
 "nmap <M-0> g^
 
 "---color scheme---
-set background=dark
+set background=light
 let g:solarized_termtrans=1
 let g:solarized_termcolors=256
 "let g:solarized_contrast="high"
@@ -147,9 +153,9 @@ set cf            " Enable error files and jumping
 "---indentation---
 " smartindent breaks for python comments
 "set smartindent  "indent smartly
-set tabstop=4    "4-space tabs
-set sts=4        "fix backspace for tabs
-set shiftwidth=4 "4-space indent
+set tabstop=2    "4-space tabs
+set sts=2        "fix backspace for tabs
+set shiftwidth=2 "4-space indent
 set autoindent   "auto indent same as previous
 set smarttab
 set expandtab    "tabs -> spaces
@@ -247,12 +253,13 @@ endfunction
 " ---------------
 " Syntastic
 " ---------------
-let g:syntastic_enable_signs=1
-let g:syntastic_auto_loc_list=1
-let g:syntastic_mode_map = { 'mode': 'active',
+"let g:syntastic_enable_signs=1
+"let g:syntastic_auto_loc_list=1
+"let g:syntastic_mode_map = { 'mode': 'active',
                             \ 'passive_filetypes': ['latex', 'tex'] }
+"let g:syntastic_python_pylint_exec = '/usr/bin/pylint2'
 " hack to stop syntastic from running on wq
-noremap :wq :au! syntastic<cr>:wq
+"noremap :wq :au! syntastic<cr>:wq
 
 " ---------------
 " NERDTree
@@ -328,9 +335,9 @@ let g:Tex_CompileRule_pdf='latexmk -dvi- -pdf $*'
 "set guifont=Monaco\ for\ Powerline\ 10
 "let g:Powerline_symbols = 'fancy'
 
-let g:indent_guides_auto_colors = 0
-autocmd VimEnter,Colorscheme * :hi IndentGuidesOdd  ctermbg=234
-autocmd VimEnter,Colorscheme * :hi IndentGuidesEven ctermbg=235
+"let g:indent_guides_auto_colors = 0
+"autocmd VimEnter,Colorscheme * :hi IndentGuidesOdd  ctermbg=234
+"autocmd VimEnter,Colorscheme * :hi IndentGuidesEven ctermbg=235
 
 
 "nnoremap <F1> :help<Space> "f1 prompt help (all modes)

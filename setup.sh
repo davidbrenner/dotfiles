@@ -14,14 +14,14 @@ ln -sf $DIR/fonts $HOME/.fonts
 ln -sf $DIR/terminfo $HOME/.terminfo
 ln -sf $DIR/tmux.conf $HOME/.tmux.conf
 ln -sf $DIR/Xresources $HOME/.Xresources
-ln -sf $DIR/i3 $HOME/.i3
-ln -sf $DIR/vim $HOME/.vim
-ln -sf $DIR/vim/vimrc $HOME/.vimrc
-mkdir -p vim/backup
+#ln -sf $DIR/i3 $HOME/.i3
+#ln -sf $DIR/vim $HOME/.vim
+#ln -sf $DIR/vim/vimrc $HOME/.vimrc
+#mkdir -p vim/backup
 # Run bundle install in vim
-git clone https://github.com/gmarik/vundle.git vim/bundle/vundle
-vim +BundleInstall +qall
+#git clone https://github.com/gmarik/vundle.git vim/bundle/vundle
+#vim +BundleInstall +qall
 # Command-T install
-cd vim/bundle/Command-T/ruby/command-t
-ruby extconf.rb
-make
+#cd vim/bundle/Command-T/ruby/command-t
+#ruby extconf.rb
+#make

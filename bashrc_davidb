@@ -16,12 +16,16 @@ HISTCONTROL=ignoredups
 export HISTIGNORE="&:ls:ll:la:lh:sl"
 export HISTTIMEFORMAT='%Y-%m-%d %H:%M:%S - '
 
+export TERMINAL=/usr/bin/urxvt
 export PAGER=/usr/bin/less
 export EDITOR='vim'
 export BROWSER='firefox'
 #export CC=/usr/bin/gcc
 export LC_ALL="en_US.UTF-8"
 export LANGUAGE="en_US.UTF-8"
+eval `dircolors ~/dotfiles/dircolors.ansi-light`
+
+PATH="$(ruby -e 'print Gem.user_dir')/bin:$PATH"
 
 # turn off stty start/stop
 stty -ixon
@@ -52,3 +56,6 @@ extract () {
 mktar() { tar cvf  "${1%%/}.tar"     "${1%%/}/"; }
 mktgz() { tar cvzf "${1%%/}.tar.gz"  "${1%%/}/"; }
 mktbz() { tar cvjf "${1%%/}.tar.bz2" "${1%%/}/"; }
+
+export GEM_HOME=$(ruby -e 'print Gem.user_dir')
+export PATH=~/.npm-global/bin:$PATH
